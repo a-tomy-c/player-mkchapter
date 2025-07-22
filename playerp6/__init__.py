@@ -200,6 +200,9 @@ class PlayerP6(QWidget):
     def get_time_rem(self) -> str:
         time_rem = self.duration - self.position
         return self.format_time(time_rem)
+    
+    def current_filepath(self) -> str:
+        return self.media_player.source().toLocalFile()
 
 
 if __name__ == "__main__":

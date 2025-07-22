@@ -1,6 +1,7 @@
 import os
+from pathlib import Path
 from PySide6.QtWidgets import QWidget
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QTimer
 from skin_mkchapter import Ui_PlayerMakeChapter
 from playerp6 import PlayerP6
 
@@ -30,6 +31,7 @@ class MakeChapters(QWidget):
         self.player.ui.sld_tiempo.sliderReleased.connect(self.update_time_label)
         self.ui.bt_backward.clicked.connect(self.backward_1s)
         self.ui.bt_forward.clicked.connect(self.forward_1s)
+        self.ui.bt_capture.clicked.connect(self.capture_frame)
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls():
@@ -57,6 +59,46 @@ class MakeChapters(QWidget):
         self.player._move_x_seg(1)
         self.update_time_label()
 
+    def capture_frame(self):
+        # Capturar solo el área del widget de video (sin botones)
+        try:
+            # Obtener la pantalla actual
+            screen = QApplication.primaryScreen()
+            
+            # Obtener la posición global del widget de video
+            video_widget = self.player.video_widget
+            global_pos = video_widget.mapToGlobal(video_widget.rect().topLeft())
+            
+            # Capturar solo el área del widget de video
+            pixmap = screen.grabWindow(0, 
+                                     global_pos.x(), 
+                                     global_pos.y(),
+                                     video_widget.width(), 
+                                     video_widget.height())
+            
+            if not pixmap.isNull():
+                timestamp = self.player.format_time(self.player.position)
+                # filename = f"captura_{timestamp.replace(':', '.').replace('.', '-')}.png"
+                filename = f"{timestamp.replace('.', ' ').replace(':', '.')}.jpg"
+                
+                file_path = filename
+                video_path = self.player.current_filepath()
+                if video_path:
+                    path = Path(video_path)
+                    parent = path.parent.as_posix()
+                    file_path = os.path.join(parent, filename)
+                
+                if pixmap.save(file_path, "JPG"):
+                    original_title = self.windowTitle()
+                    self.setWindowTitle(f"{original_title} - ✓ Captura guardada!")
+                    QTimer.singleShot(2000, lambda: self.setWindowTitle(original_title))
+                else:
+                    print("Error al guardar la captura")
+            else:
+                print("No se pudo capturar el frame")
+                
+        except Exception as e:
+            print(f"Error al capturar frame: {e}")
 
 
 if __name__=="__main__":
