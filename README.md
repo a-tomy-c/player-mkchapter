@@ -7,7 +7,8 @@ video player para generar chapter en un archivo txt
 - agregado y carga de interfaz
 - fix `drag and drop`
 - set volume del player, al usar el slide no cambia el label
-- se arreglo que el timer solo avance cuanod se esta reproduciendo video
+- se arreglo que el timer solo avance cuando se esta reproduciendo video
+- se actualizo el `player_p6` a la ultima version del repositorio (con los fixs del slider de tiempo)
 
 
 para arreglar `drag and drop` del widget player anidado:

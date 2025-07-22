@@ -26,7 +26,7 @@ class PlayerP6(QWidget):
 
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_ui)
-        # self.timer.start(100)
+        self.timer.start(100)
 
         vly = QVBoxLayout(self.ui.fm_video)
         vly.addWidget(self.video_widget)
@@ -41,6 +41,7 @@ class PlayerP6(QWidget):
         self.ui.bt_toggle.clicked.connect(self.toggle_control)
         self.ui.bt_stop.clicked.connect(self.stop)
         self.ui.sld_tiempo.valueChanged.connect(self.set_position)
+        self.ui.sld_tiempo.sliderReleased.connect(self.update_labels_time)
         self.ui.sld_vol.valueChanged.connect(self.set_volume)
         self.media_player.positionChanged.connect(self.position_changed)
         self.media_player.durationChanged.connect(self.duration_changed)
@@ -103,23 +104,27 @@ class PlayerP6(QWidget):
         current_position = self.media_player.position()
         new_position = min(current_position + 5000, self.duration)
         self.media_player.setPosition(new_position)
+        self.update_labels_time()
         
     def backward_5s(self):
         current_position = self.media_player.position()
         new_position = max(current_position - 5000, 0)
         self.media_player.setPosition(new_position)
+        self.update_labels_time()
 
     def next_frame(self):
         # Avanzar aproximadamente un frame (asumiendo 30 fps)
         current_position = self.media_player.position()
         new_position = min(current_position + 33, self.duration)
         self.media_player.setPosition(new_position)
+        self.update_labels_time()
         
     def previous_frame(self):
         # Retroceder aproximadamente un frame (asumiendo 30 fps)
         current_position = self.media_player.position()
         new_position = max(current_position - 33, 0)
         self.media_player.setPosition(new_position)
+        self.update_labels_time()
 
     def capture_frame(self):
         # Capturar solo el área del widget de video (sin botones)
@@ -184,6 +189,13 @@ class PlayerP6(QWidget):
     def toggle_control(self):
         index = 1 if self.ui.sw.currentIndex()==0 else 0
         self.ui.sw.setCurrentIndex(index)
+
+    def update_labels_time(self):
+        time = self.get_current_time()
+        self.ui.lb_time.setText(time)
+        self.ui.lb_time_t.setText(time)
+        time_rem = self.duration - self.position
+        self.ui.lb_time_rem.setText(self.format_time(time_rem))
 
 
 if __name__ == "__main__":
