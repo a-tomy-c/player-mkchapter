@@ -100,15 +100,15 @@ class PlayerP6(QWidget):
         self.audio_output.setVolume(volume / 100.0)
         self.ui.lb_vol.setText(f'{volume}')
         
-    def forward_5s(self):
-        current_position = self.media_player.position()
-        new_position = min(current_position + 5000, self.duration)
-        self.media_player.setPosition(new_position)
-        self.update_labels_time()
+    def forward_5s(self, x:int=5):
+        self._move_x_seg(5)
         
-    def backward_5s(self):
+    def backward_5s(self, x:int=5):
+        self._move_x_seg(-5)
+
+    def _move_x_seg(self, x:int=5):
         current_position = self.media_player.position()
-        new_position = max(current_position - 5000, 0)
+        new_position = max(current_position + (x*1000), 0)
         self.media_player.setPosition(new_position)
         self.update_labels_time()
 
@@ -196,6 +196,10 @@ class PlayerP6(QWidget):
         self.ui.lb_time_t.setText(time)
         time_rem = self.duration - self.position
         self.ui.lb_time_rem.setText(self.format_time(time_rem))
+
+    def get_time_rem(self) -> str:
+        time_rem = self.duration - self.position
+        return self.format_time(time_rem)
 
 
 if __name__ == "__main__":

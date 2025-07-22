@@ -117,7 +117,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="bt_fordward">
+              <widget class="QPushButton" name="bt_forward">
                <property name="minimumSize">
                 <size>
                  <width>40</width>
@@ -166,6 +166,19 @@
                 </size>
                </property>
               </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="lb_time_rem">
+               <property name="font">
+                <font>
+                 <family>Noto Sans</family>
+                 <pointsize>16</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>00:00:00.000</string>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QPushButton" name="bt_add">

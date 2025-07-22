@@ -27,6 +27,9 @@ class MakeChapters(QWidget):
         self.player.setAcceptDrops(False)
         self.player.video_widget.setAttribute(Qt.WA_TransparentForMouseEvents, True)
         self.player.timer.timeout.connect(self.update_time_label)
+        self.player.ui.sld_tiempo.sliderReleased.connect(self.update_time_label)
+        self.ui.bt_backward.clicked.connect(self.backward_1s)
+        self.ui.bt_forward.clicked.connect(self.forward_1s)
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls():
@@ -41,8 +44,19 @@ class MakeChapters(QWidget):
         event.acceptProposedAction()
 
     def update_time_label(self):
-        res= self.player.get_current_time()
-        self.ui.lb_time.setText(res)
+        now = self.player.get_current_time()
+        self.ui.lb_time.setText(now)
+        rem = self.player.get_time_rem()
+        self.ui.lb_time_rem.setText(rem)
+
+    def backward_1s(self):
+        self.player._move_x_seg(-1)
+        self.update_time_label()
+
+    def forward_1s(self):
+        self.player._move_x_seg(1)
+        self.update_time_label()
+
 
 
 if __name__=="__main__":

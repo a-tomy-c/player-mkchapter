@@ -71,12 +71,12 @@ class Ui_PlayerMakeChapter(object):
 
         self.horizontalLayout.addWidget(self.bt_backward)
 
-        self.bt_fordward = QPushButton(self.fm_top)
-        self.bt_fordward.setObjectName(u"bt_fordward")
-        self.bt_fordward.setMinimumSize(QSize(40, 0))
-        self.bt_fordward.setMaximumSize(QSize(40, 16777215))
+        self.bt_forward = QPushButton(self.fm_top)
+        self.bt_forward.setObjectName(u"bt_forward")
+        self.bt_forward.setMinimumSize(QSize(40, 0))
+        self.bt_forward.setMaximumSize(QSize(40, 16777215))
 
-        self.horizontalLayout.addWidget(self.bt_fordward)
+        self.horizontalLayout.addWidget(self.bt_forward)
 
         self.bt_capture = QPushButton(self.fm_top)
         self.bt_capture.setObjectName(u"bt_capture")
@@ -88,6 +88,15 @@ class Ui_PlayerMakeChapter(object):
         self.horizontalSpacer = QSpacerItem(97, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
+
+        self.lb_time_rem = QLabel(self.fm_top)
+        self.lb_time_rem.setObjectName(u"lb_time_rem")
+        font1 = QFont()
+        font1.setFamilies([u"Noto Sans"])
+        font1.setPointSize(16)
+        self.lb_time_rem.setFont(font1)
+
+        self.horizontalLayout.addWidget(self.lb_time_rem)
 
         self.bt_add = QPushButton(self.fm_top)
         self.bt_add.setObjectName(u"bt_add")
@@ -182,8 +191,9 @@ class Ui_PlayerMakeChapter(object):
         PlayerMakeChapter.setWindowTitle(QCoreApplication.translate("PlayerMakeChapter", u"Form", None))
         self.lb_time.setText(QCoreApplication.translate("PlayerMakeChapter", u"00:00:00.000", None))
         self.bt_backward.setText(QCoreApplication.translate("PlayerMakeChapter", u"-", None))
-        self.bt_fordward.setText(QCoreApplication.translate("PlayerMakeChapter", u"+", None))
+        self.bt_forward.setText(QCoreApplication.translate("PlayerMakeChapter", u"+", None))
         self.bt_capture.setText(QCoreApplication.translate("PlayerMakeChapter", u"C", None))
+        self.lb_time_rem.setText(QCoreApplication.translate("PlayerMakeChapter", u"00:00:00.000", None))
         self.bt_add.setText(QCoreApplication.translate("PlayerMakeChapter", u"ADD", None))
         self.lb_capture.setText("")
     # retranslateUi
